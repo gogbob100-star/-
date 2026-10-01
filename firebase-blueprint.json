@@ -1,0 +1,163 @@
+{
+  "entities": {
+    "Novel": {
+      "title": "Novel",
+      "description": "A novel manuscript project containing chapters, characters, world building, and plot.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "author": { "type": "string" },
+        "genre": { "type": "string" },
+        "synopsis": { "type": "string" },
+        "targetWordCount": { "type": "number" },
+        "coverImage": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["title", "author"]
+    },
+    "Chapter": {
+      "title": "Chapter",
+      "description": "A chapter within a novel project.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "act": { "type": "string" },
+        "content": { "type": "string" },
+        "synopsis": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "revising", "completed"] },
+        "targetWords": { "type": "number" },
+        "order": { "type": "number" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["title", "content", "order"]
+    },
+    "Character": {
+      "title": "Character",
+      "description": "A character profile in the novel character bible.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["protagonist", "antagonist", "supporting", "minor"] },
+        "age": { "type": "string" },
+        "archetype": { "type": "string" },
+        "externalGoal": { "type": "string" },
+        "internalNeed": { "type": "string" },
+        "fatalFlaw": { "type": "string" },
+        "voiceAndQuirks": { "type": "string" },
+        "backstory": { "type": "string" },
+        "color": { "type": "string" }
+      },
+      "required": ["name", "role"]
+    },
+    "CharacterRelationship": {
+      "title": "CharacterRelationship",
+      "description": "An interactive relationship edge between two characters.",
+      "type": "object",
+      "properties": {
+        "sourceId": { "type": "string" },
+        "targetId": { "type": "string" },
+        "type": { "type": "string", "enum": ["friend", "enemy", "family", "mentor", "rival", "love", "secret"] },
+        "label": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "required": ["sourceId", "targetId", "type", "label"]
+    },
+    "WorldNote": {
+      "title": "WorldNote",
+      "description": "A world building note regarding lore, locations, or timeline.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string", "enum": ["location", "lore", "timeline", "rules", "research"] },
+        "content": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["title", "content"]
+    },
+    "PlotBeat": {
+      "title": "PlotBeat",
+      "description": "A 3-act plot beat card in the novel outline.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "act": { "type": "string", "enum": ["act1", "act2a", "act2b", "act3"] },
+        "description": { "type": "string" },
+        "resolved": { "type": "boolean" },
+        "linkedChapterId": { "type": "string" }
+      },
+      "required": ["title", "act", "description"]
+    },
+    "PomodoroSession": {
+      "title": "PomodoroSession",
+      "description": "A completed focus writing session record.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "novelId": { "type": "string" },
+        "durationMinutes": { "type": "number" },
+        "completedAt": { "type": "string" },
+        "date": { "type": "string" }
+      },
+      "required": ["durationMinutes", "completedAt", "date"]
+    },
+    "ChapterSnapshot": {
+      "title": "ChapterSnapshot",
+      "description": "A timestamped backup snapshot of a chapter in Firestore.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "novelId": { "type": "string" },
+        "chapterId": { "type": "string" },
+        "chapterTitle": { "type": "string" },
+        "content": { "type": "string" },
+        "wordsCount": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "label": { "type": "string" },
+        "type": { "type": "string", "enum": ["auto", "manual"] }
+      },
+      "required": ["novelId", "chapterId", "content", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/novels/{novelId}": {
+      "schema": "Novel",
+      "description": "Top-level novel manuscript document."
+    },
+    "/novels/{novelId}/chapters/{chapterId}": {
+      "schema": "Chapter",
+      "description": "Chapters belonging to the novel."
+    },
+    "/novels/{novelId}/characters/{characterId}": {
+      "schema": "Character",
+      "description": "Characters belonging to the novel."
+    },
+    "/novels/{novelId}/relationships/{relationshipId}": {
+      "schema": "CharacterRelationship",
+      "description": "Relationships connecting characters in the novel."
+    },
+    "/novels/{novelId}/worldNotes/{worldNoteId}": {
+      "schema": "WorldNote",
+      "description": "World building notes for the novel."
+    },
+    "/novels/{novelId}/plotBeats/{plotBeatId}": {
+      "schema": "PlotBeat",
+      "description": "Plot outline beats for the novel."
+    },
+    "/pomodoroSessions/{sessionId}": {
+      "schema": "PomodoroSession",
+      "description": "Collection of recorded Pomodoro writing sessions."
+    },
+    "/chapterSnapshots/{snapshotId}": {
+      "schema": "ChapterSnapshot",
+      "description": "Collection of periodic and manual chapter backup snapshots."
+    }
+  }
+}

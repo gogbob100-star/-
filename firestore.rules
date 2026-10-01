@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /test/connection {
+      allow read: if true;
+    }
+
+    match /pomodoroSessions/{sessionId} {
+      allow read, write: if true;
+    }
+
+    match /chapterSnapshots/{snapshotId} {
+      allow read, write: if true;
+    }
+
+    match /novels/{novelId} {
+      allow read, write: if true;
+
+      match /chapters/{chapterId} {
+        allow read, write: if true;
+      }
+
+      match /characters/{characterId} {
+        allow read, write: if true;
+      }
+
+      match /relationships/{relationshipId} {
+        allow read, write: if true;
+      }
+
+      match /worldNotes/{worldNoteId} {
+        allow read, write: if true;
+      }
+
+      match /plotBeats/{plotBeatId} {
+        allow read, write: if true;
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "راوي | استوديو تأليف وكتابة الروايات الذكي",
+  "description": "منصة متقدمة للروائيين والكتاب: تنظيم الفصول، بناء الشخصيات، مساعد ذكاء اصطناعي أدبي، وتصدير احترافي للكتب بصيغة PDF وWord ومختلف الصيغ.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
